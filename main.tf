@@ -56,3 +56,7 @@ output "masterpublicip" {
 output "nodepublicip" {
   value = aws_instance.red-jenkins-node.public_ip
 }
+
+output "inventory" {
+  value = "jenkins ansible_host=${aws_instance.red-jenkins-master.public_ip} ansible_user=ubuntu"
+}
