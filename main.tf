@@ -1,9 +1,9 @@
 provider "aws" {
-  region  = "ap-south-1"
+  region = "ap-south-1"
 }
 
 variable "image_id" {
-  type = string
+  type    = string
   default = "ami-0123b531fc646552f"
 }
 
@@ -18,11 +18,11 @@ output "vpc-output" {
 
 #Jenkins Master Instance
 resource "aws_instance" "red-jenkins-master" {
-  ami           = var.image_id
-  instance_type = "t2.micro"
+  ami                    = var.image_id
+  instance_type          = "t2.micro"
   vpc_security_group_ids = [module.vpc-module.sgmaster]
   tags = {
-    Name       = "red-team-jenkins-master"
+    Name        = "red-team-jenkins-master"
     Purpose     = "jenkins master"
     Environment = "Dev"
   }
@@ -30,11 +30,11 @@ resource "aws_instance" "red-jenkins-master" {
 
 #Jenkins Node Instance
 resource "aws_instance" "red-jenkins-node" {
-  ami           = var.image_id
-  instance_type = "t2.micro"
+  ami                    = var.image_id
+  instance_type          = "t2.micro"
   vpc_security_group_ids = [module.vpc-module.sgnode]
   tags = {
-    Name       = "red-team-jenkins-node"
+    Name        = "red-team-jenkins-node"
     Purpose     = "jenkins node"
     Environment = "Dev"
   }
@@ -49,3 +49,10 @@ output "node" {
   value = aws_instance.red-jenkins-node.id
 }
 
+output "masterpublicip" {
+  value = aws_instance.red-jenkins-master.public_ip
+}
+
+output "nodepublicip" {
+  value = aws_instance.red-jenkins-node.public_ip
+}
