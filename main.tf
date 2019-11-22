@@ -48,8 +48,11 @@ variable "prefix" {
 
 
 resource "aws_s3_bucket" "terraform" {
-  bucket = "${var.prefix}-${replace(lower(data.aws_caller_identity.current.user_id), ":", "-")}"
+  bucket = "redteam-state"
   acl    = "private"
+  lifecycle = {
+    prevent_destroy = true
+  }
   tags = {
     Name        = var.prefix
     Owner       = var.prefix
@@ -81,12 +84,4 @@ output "nodepublicip" {
 
 output "inventory" {
   value = "jenkins ansible_host=${aws_instance.red-jenkins-master.public_ip} ansible_user=ubuntu"
-}
-
-terraform {
-  backend "s3" {
-    bucket = "${var.prefix}-${replace(lower(data.aws_caller_identity.current.user_id), ":", "-")}"
-    key    = "redteam"
-    region = "ap-south-1"
-  }
 }
