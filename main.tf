@@ -9,7 +9,7 @@ variable "image_id" {
 
 
 module "vpc-module" {
-  source = "github.com/upesabhi/redteam.git?ref=v0.0.2"
+  source = "github.com/upesabhi/redteam.git?ref=v0.0.3"
 }
 
 output "vpc-output" {
@@ -20,7 +20,7 @@ output "vpc-output" {
 resource "aws_instance" "red-jenkins-master" {
   ami           = var.image_id
   instance_type = "t2.micro"
-  security_groups = [module.vpc-module.vpcid]
+  vpc_security_group_ids = [module.vpc-module.sgmaster]
   tags = {
     Name       = "red-team-jenkins-master"
     Purpose     = "jenkins master"
@@ -32,7 +32,7 @@ resource "aws_instance" "red-jenkins-master" {
 resource "aws_instance" "red-jenkins-node" {
   ami           = var.image_id
   instance_type = "t2.micro"
-  security_groups = [module.vpc-module.vpcid]
+  vpc_security_group_ids = [module.vpc-module.sgnode]
   tags = {
     Name       = "red-team-jenkins-node"
     Purpose     = "jenkins node"
