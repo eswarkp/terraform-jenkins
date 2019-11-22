@@ -9,7 +9,7 @@ variable "image_id" {
 
 
 module "vpc-module" {
-  source = "github.com/upesabhi/redteam.git?ref=v0.0.4"
+  source = "github.com/upesabhi/redteam.git?ref=v0.0.5"
 }
 
 output "vpc-output" {
@@ -45,23 +45,6 @@ data "aws_caller_identity" "current" {}
 variable "prefix" {
   default = "redteam"
 }
-
-
-# resource "aws_s3_bucket" "terraform" {
-#   bucket = "redteam-state"
-#   acl    = "private"
-#   tags = {
-#     Name        = "redteam-state"
-#     Owner       = "redteam-state"
-#     Purpose     = "terraform jenkins pipeline"
-#     Environment = "Dev"
-#   }
-# }
-
-
-# output "s3-arn" {
-#   value = "${aws_s3_bucket.terraform.arn}"
-# }
 
 output "master" {
   value = aws_instance.red-jenkins-master.id
