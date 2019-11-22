@@ -40,6 +40,7 @@ resource "aws_instance" "red-jenkins-master" {
 resource "aws_instance" "red-jenkins-node" {
   ami                    = var.image_id
   instance_type          = "t2.micro"
+  key_name               = "${aws_key_pair.jenkins.key_name}"
   vpc_security_group_ids = [module.vpc-module.sgnode]
   tags = {
     Name        = "red-team-jenkins-node"
