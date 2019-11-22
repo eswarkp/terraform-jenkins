@@ -18,7 +18,7 @@ output "vpc-output" {
 
 
 resource "aws_key_pair" "jenkins" {
-  key_name   = "jenkins-key"
+  key_name   = "redteam-key"
   public_key = "${file("~/.ssh/id_rsa.pub")}"
 }
 
