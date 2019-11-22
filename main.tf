@@ -9,7 +9,7 @@ variable "image_id" {
 
 
 module "vpc-module" {
-  source = "github.com/upesabhi/redteam.git?ref=v0.0.3"
+  source = "github.com/upesabhi/redteam.git?ref=v0.0.4"
 }
 
 output "vpc-output" {
