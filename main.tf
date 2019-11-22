@@ -16,10 +16,17 @@ output "vpc-output" {
   value = module.vpc-module.vpcid
 }
 
+
+resource "aws_key_pair" "jenkins" {
+  key_name   = "jenkins-key"
+  public_key = "${file("~/.ssh/id_rsa.pub")}"
+}
+
 #Jenkins Master Instance
 resource "aws_instance" "red-jenkins-master" {
   ami                    = var.image_id
   instance_type          = "t2.micro"
+  key_name               = "${aws_key_pair.jenkins.key_name}"
   vpc_security_group_ids = [module.vpc-module.sgmaster]
   tags = {
     Name        = "red-team-jenkins-master"
@@ -27,6 +34,7 @@ resource "aws_instance" "red-jenkins-master" {
     Environment = "Dev"
   }
 }
+
 
 #Jenkins Node Instance
 resource "aws_instance" "red-jenkins-node" {
