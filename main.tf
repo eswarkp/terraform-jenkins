@@ -47,16 +47,16 @@ variable "prefix" {
 }
 
 
-resource "aws_s3_bucket" "terraform" {
-  bucket = "redteam-state"
-  acl    = "private"
-  tags = {
-    Name        = "redteam-state"
-    Owner       = "redteam-state"
-    Purpose     = "terraform jenkins pipeline"
-    Environment = "Dev"
-  }
-}
+# resource "aws_s3_bucket" "terraform" {
+#   bucket = "redteam-state"
+#   acl    = "private"
+#   tags = {
+#     Name        = "redteam-state"
+#     Owner       = "redteam-state"
+#     Purpose     = "terraform jenkins pipeline"
+#     Environment = "Dev"
+#   }
+# }
 
 
 output "s3-arn" {
