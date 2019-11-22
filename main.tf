@@ -50,12 +50,9 @@ variable "prefix" {
 resource "aws_s3_bucket" "terraform" {
   bucket = "redteam-state"
   acl    = "private"
-  lifecycle = {
-    prevent_destroy = true
-  }
   tags = {
-    Name        = var.prefix
-    Owner       = var.prefix
+    Name        = "redteam-state"
+    Owner       = "redteam-state"
     Purpose     = "terraform jenkins pipeline"
     Environment = "Dev"
   }
