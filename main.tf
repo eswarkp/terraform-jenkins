@@ -40,6 +40,24 @@ resource "aws_instance" "red-jenkins-node" {
   }
 }
 
+variable "prefix" {
+  default = "redteam"
+}
+
+resource "aws_s3_bucket" "terraform" {
+  bucket = "${var.prefix}-${replace(lower(data.aws_caller_identity.current.user_id), ":", "-")}"
+  acl    = "private"
+  tags = {
+      Name       = ${var.prefix}
+      Owner       = ${var.prefix}
+      Purpose     = "terraform jenkins pipeline"
+      Environment = "Dev"
+  }
+}
+
+output "s3-arn" {
+  value = "${aws_s3_bucket.terraform.arn}"
+}
 
 output "master" {
   value = aws_instance.red-jenkins-master.id
