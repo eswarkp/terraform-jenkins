@@ -7,10 +7,20 @@ variable "image_id" {
   default = "ami-0123b531fc646552f"
 }
 
+
+module "vpc-module" {
+  source = "github.com/upesabhi/redteam.git?ref=v0.0.2"
+}
+
+output "vpc-output" {
+  value = module.vpc-module.vpcid
+}
+
 #Jenkins Master Instance
 resource "aws_instance" "red-jenkins-master" {
   ami           = var.image_id
   instance_type = "t2.micro"
+  security_groups = [module.vpc-module.vpcid]
   tags = {
     Name       = "red-team-jenkins-master"
     Purpose     = "jenkins master"
@@ -22,6 +32,7 @@ resource "aws_instance" "red-jenkins-master" {
 resource "aws_instance" "red-jenkins-node" {
   ami           = var.image_id
   instance_type = "t2.micro"
+  security_groups = [module.vpc-module.vpcid]
   tags = {
     Name       = "red-team-jenkins-node"
     Purpose     = "jenkins node"
@@ -38,12 +49,3 @@ output "node" {
   value = aws_instance.red-jenkins-node.id
 }
 
-
-module "vpc-module" {
-  source = "github.com/upesabhi/terraform.git"
-}
-
-
-output "vpc-output" {
-  value = vpc-module
-}
