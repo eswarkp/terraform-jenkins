@@ -59,9 +59,9 @@ variable "prefix" {
 # }
 
 
-output "s3-arn" {
-  value = "${aws_s3_bucket.terraform.arn}"
-}
+# output "s3-arn" {
+#   value = "${aws_s3_bucket.terraform.arn}"
+# }
 
 output "master" {
   value = aws_instance.red-jenkins-master.id
