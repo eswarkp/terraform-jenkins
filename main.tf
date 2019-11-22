@@ -40,6 +40,8 @@ resource "aws_instance" "red-jenkins-node" {
   }
 }
 
+data "aws_caller_identity" "current" {}
+
 variable "prefix" {
   default = "redteam"
 }
@@ -48,10 +50,10 @@ resource "aws_s3_bucket" "terraform" {
   bucket = "${var.prefix}-${replace(lower(data.aws_caller_identity.current.user_id), ":", "-")}"
   acl    = "private"
   tags = {
-      Name       = ${var.prefix}
-      Owner       = ${var.prefix}
-      Purpose     = "terraform jenkins pipeline"
-      Environment = "Dev"
+    Name        = var.prefix
+    Owner       = var.prefix
+    Purpose     = "terraform jenkins pipeline"
+    Environment = "Dev"
   }
 }
 
